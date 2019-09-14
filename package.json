@@ -1,0 +1,34 @@
+{
+  "name": "photonenarchiv",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx gridsome develop",
+    "build": "npx gridsome build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rashfael/photonenarchiv.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rashfael/photonenarchiv/issues"
+  },
+  "homepage": "https://github.com/rashfael/photonenarchiv#readme",
+  "dependencies": {
+    "@gridsome/source-filesystem": "^0.6.0",
+    "@gridsome/transformer-remark": "^0.3.3",
+    "fs-extra": "^8.1.0",
+    "gridsome": "^0.7.2",
+    "gridsome-transformer-image": "file:plugins/gridsome-transformer-image",
+    "js-yaml": "^3.13.1",
+    "vuepress": "^1.0.4"
+  },
+  "devDependencies": {
+    "gridsome-plugin-pug": "0.0.3",
+    "pug": "^2.0.4",
+    "stylus-loader": "^3.0.2"
+  }
+}

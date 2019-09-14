@@ -1,0 +1,23 @@
+@import './variables'
+
+.layout-root
+
+	header.navbar
+		position: fixed
+		top: 0
+		left: 0
+		width: 100%
+		height: $navbar-height
+		background-color: $clr-white
+		border-bottom: border-separator()
+		display: flex
+		align-items: center
+		padding: 0 16px
+		a.home
+			color: $clr-primary
+			text-decoration: none
+			font-size: 28px
+			font-weight: 200
+
+	main.content
+		margin-top: $navbar-height + 24px
