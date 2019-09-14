@@ -31,7 +31,7 @@ export default {
 	components: {},
 	data () {
 		return {
-			streamWidth: document.body.offsetWidth - 64 * 2 // TODO make responsive
+			streamWidth: document.body.offsetWidth - STREAM_MARGIN * 2
 		}
 	},
 	computed: {
@@ -54,13 +54,17 @@ export default {
 		}
 	},
 	created () {
-		console.log(this.$page.event.belongsTo.edges[0].node.imagePath)
+		window.addEventListener('resize', this.onResize)
 	},
-	mounted () {
-		this.$nextTick(() => {
-		})
+	destroyed () {
+		window.removeEventListener('resize', this.onResize)
 	},
-	methods: {}
+	methods: {
+		onResize () {
+			this.streamWidth = document.body.offsetWidth - STREAM_MARGIN * 2
+			console.log(this.streamWidth)
+		}
+	}
 }
 </script>
 <style lang="stylus">
