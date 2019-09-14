@@ -1,9 +1,10 @@
 <template lang="pug">
 DefaultLayout
 	.page-event
-		.photos
-			g-link.photo(v-for="photo of $page.event.belongsTo.edges", :to="photo.node.path")
-				g-image.thumbnail(:src="photo.node.imagePath")
+		.photo-stream
+			.row(v-for="row of photoStream", :style="{'--stream-row-scale': row.scale}")
+				g-link.photo(v-for="photo of row.photos", :to="photo.path")
+					g-image.thumbnail(:src="photo.image")
 </template>
 <page-query>
 query ($id: ID!) {
@@ -15,7 +16,7 @@ query ($id: ID!) {
 					... on Photo {
 						id
 						path
-						imagePath (height: 200, fit: inside)
+						image (height: 300, fit: inside)
 					}
 				}
 			}
@@ -24,14 +25,37 @@ query ($id: ID!) {
 }
 </page-query>
 <script>
+const STREAM_MARGIN = 64
+const STREAM_GUTTER = 4
 export default {
 	components: {},
 	data () {
 		return {
+			streamWidth: document.body.offsetWidth - 64 * 2 // TODO make responsive
 		}
 	},
-	computed: {},
-	created () {},
+	computed: {
+		photoStream () {
+			const photos = this.$page.event.belongsTo.edges
+			const rows = [{
+				photos: []
+			}]
+			let rowWidth = 0
+			for (const photo of photos) {
+				rows[rows.length - 1].photos.push(photo.node)
+				rowWidth += photo.node.image.size.width
+				if (rowWidth + (rows[rows.length - 1].photos.length - 1) * STREAM_GUTTER > this.streamWidth) {
+					rows[rows.length - 1].scale = (this.streamWidth - (rows[rows.length - 1].photos.length - 1) * STREAM_GUTTER) / rowWidth
+					rows.push({photos: []})
+					rowWidth = 0
+				}
+			}
+			return rows
+		}
+	},
+	created () {
+		console.log(this.$page.event.belongsTo.edges[0].node.imagePath)
+	},
 	mounted () {
 		this.$nextTick(() => {
 		})
@@ -42,13 +66,19 @@ export default {
 <style lang="stylus">
 @import '../styles/variables'
 .page-event
-	.photos
+	.photo-stream
+		padding: 8px 64px
 		display: flex
-		justify-content: center
-		.photo
+		flex-direction: column
+		.row
+			height: calc(300px * var(--stream-row-scale))
 			display: flex
-			flex-direction: column
-			height: 200px
-			max-width: 300px
-			margin: 16px
+			&:not(:first-child)
+				margin: 4px 0 0 0
+			.photo
+				&:not(:first-child)
+					margin: 0 0 0 4px
+				img
+					height: calc(300px * var(--stream-row-scale))
+					width: auto
 </style>

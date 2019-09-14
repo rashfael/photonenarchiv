@@ -119,7 +119,7 @@ class FilesystemImageSource {
 		return {
 			id,
 			path: routePath,
-			imagePath: path.join(this.context, relPath),
+			image: path.join(this.context, relPath),
 			...metadata,
 			fileInfo: {
 				extension: ext,
