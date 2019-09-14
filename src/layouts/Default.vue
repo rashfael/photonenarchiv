@@ -1,7 +1,9 @@
 <template lang="pug">
 .layout-root
 	header.navbar
-		a.home(href="/") photonenarchiv
+		a.home(href="/")
+			img(src="../assets/logo.svg")
+			| photonenarchiv
 		nav
 	main.content
 		slot
