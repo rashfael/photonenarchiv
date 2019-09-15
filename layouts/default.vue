@@ -6,7 +6,7 @@
 			| photonenarchiv
 		nav
 	main.content
-		slot
+		nuxt
 	footer
 </template>
 <script>

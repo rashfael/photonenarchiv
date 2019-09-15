@@ -1,27 +1,21 @@
 <template lang="pug">
-DefaultLayout
-	.landing-page
-		.events
-			g-link.event(v-for="event of $page.events.edges", :to="event.node.path")
-				g-image.thumbnail(:src="event.node.thumbnail")
-				.name {{ event.node.name }}
+.landing-page
+	.events
+		nuxt-link.event(v-for="album of albums", :to="{name: 'albums-id', params: {id: album.id}}")
+			img.thumbnail(:src="album.thumbnail")
+			.name {{ album.name }}
 </template>
-<page-query>
-query {
-	events: allEvent {
-		edges {
-			node {
-				id
-				path
-				name
-				thumbnail (width: 200, height: 200)
-			}
-		}
-	}
-}
-</page-query>
 <script>
 export default {
+	async asyncData ({ $axios, params }) {
+		const {albums} = await $axios.$get(`/album-api/albums`)
+		return {
+			albums: albums.map(album => {
+				album.thumbnail = require('!!progressive-image-loader!albums/' + album.id + '/thumbnail.jpg').source
+				return album
+			})
+		}
+	},
 	components: {},
 	data () {
 		return {
@@ -49,6 +43,8 @@ export default {
 			height: 240px
 			margin: 16px
 			card()
+			img
+				width: 200px
 			.name
 				font-size: 24px
 				text-align: center
