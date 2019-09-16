@@ -23,7 +23,6 @@ export default {
 		}
 		const context = require.context('!!progressive-image-loader?height=300!albums/', true, /\.(jpg|png|webp)$/)
 		album.photos = album.photos.filter(photo => !photo.image.endsWith('thumbnail.jpg')).map(photo => {
-			photo.originalImage = photo.image
 			photo.thumbnailImage = context('./' + photo.image)
 			return photo
 		})
@@ -85,6 +84,9 @@ export default {
 <style lang="stylus">
 @import '../../styles/variables'
 .page-event
+	flex: auto
+	display: flex
+	flex-direction: column
 	.photo-stream
 		padding: 8px 64px
 		display: flex

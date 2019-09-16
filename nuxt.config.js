@@ -21,6 +21,9 @@ export default {
 	serverMiddleware: [
 		'~/album-api/index.js'
 	],
+	head: {
+		script: [{src: 'https://kit.fontawesome.com/fc488a80da.js'}]
+	},
 	generate: {
 		routes: async function () {
 			const albumLib = require('./album-api/lib')
