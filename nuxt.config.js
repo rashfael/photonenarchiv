@@ -10,6 +10,7 @@ export default {
 	],
 	modules: [
 		'@nuxtjs/axios',
+		'nuxt-payload-extractor'
 	],
 	build: {
 		extend (config) {
@@ -19,5 +20,25 @@ export default {
 	},
 	serverMiddleware: [
 		'~/album-api/index.js'
-	]
+	],
+	generate: {
+		routes: async function () {
+			const albumLib = require('./album-api/lib')
+			const albums = await albumLib.getAlbums()
+			return Promise.all(albums.map(async ({id}) => {
+				const album = await albumLib.getAlbum(id)
+				return {
+					route: `/albums/${album.id}/`,
+					payload: album
+				}
+			})).then(results => {
+				results.flat()
+				results.push({
+					route: '/',
+					payload: albums
+				})
+				return results
+			})
+		}
+	}
 }

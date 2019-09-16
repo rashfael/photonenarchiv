@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nuxt",
-    "build": "npx gridsome build"
+    "build": "npx gridsome build",
+    "generate": "NODE_ENV='production' nuxt generate"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",
     "nuxt": "^2.9.2",
+    "nuxt-payload-extractor": "0.0.12",
     "probe-image-size": "^5.0.0",
     "sharp": "^0.23.0"
   },

@@ -1,17 +1,24 @@
 <template lang="pug">
 .landing-page
 	.events
-		nuxt-link.event(v-for="album of albums", :to="{name: 'albums-id', params: {id: album.id}}")
+		nuxt-link.event(v-for="album of albums", :to="{name: 'albums-album', params: {album: album.id}}")
 			img.thumbnail(:src="album.thumbnail")
 			.name {{ album.name }}
 </template>
 <script>
 export default {
-	async asyncData ({ $axios, params }) {
-		const {albums} = await $axios.$get(`/album-api/albums`)
+	async asyncData ({ $axios, params, payload, $payloadURL, route }) {
+		let albums
+		if (process.static && process.client) {
+			return $axios.$get($payloadURL(route))
+		} else if (payload) {
+			albums = payload
+		} else {
+			albums = (await $axios.$get(`/album-api/albums`)).albums
+		}
 		return {
 			albums: albums.map(album => {
-				album.thumbnail = require('!!progressive-image-loader!albums/' + album.id + '/thumbnail.jpg').source
+				album.thumbnail = require('!!progressive-image-loader!albums/' + album.id + '/thumbnail.jpg').src
 				return album
 			})
 		}

@@ -25,7 +25,6 @@ export default {
 		this._observer = new IntersectionObserver(entries => {
 			const image = entries[0]
 			if (image.isIntersecting) {
-				console.log('INTERSECTED')
 				this.intersected = true
 				this._observer.disconnect()
 			}
