@@ -30,12 +30,18 @@ export default {
 			const albums = await albumLib.getAlbums()
 			return Promise.all(albums.map(async ({id}) => {
 				const album = await albumLib.getAlbum(id)
-				return {
+				const albumRoute = {
 					route: `/albums/${album.id}/`,
 					payload: album
 				}
+				const photoRoutes = album.photos.map(photo => ({
+					route: `/albums/${album.id}/${photo.id}`,
+					payload: album
+				}))
+				photoRoutes.push(albumRoute)
+				return photoRoutes
 			})).then(results => {
-				results.flat()
+				results = results.flat()
 				results.push({
 					route: '/',
 					payload: albums
