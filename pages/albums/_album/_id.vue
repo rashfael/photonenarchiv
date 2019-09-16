@@ -41,12 +41,33 @@ export default {
 		this.updatePhoto()
 	},
 	mounted () {
-		this.$nextTick(() => {
-		})
+		document.addEventListener('keydown', this.globalKeyHandler)
+	},
+	destroyed () {
+		document.removeEventListener('keydown', this.globalKeyHandler)
 	},
 	methods: {
 		updatePhoto () {
 			this.photo.fullSizeImage = context('./' + this.photo.image)
+		},
+		globalKeyHandler (event) {
+			switch (event.key) {
+				case ' ':
+				case 'PageDown':
+				case 'ArrowRight': {
+					event.preventDefault()
+					if (!this.nextPhoto) return
+					this.$router.push({name: 'albums-album-id', params: {album: this.album.id, id: this.nextPhoto.id}})
+					break
+				}
+				case 'PageUp':
+				case 'ArrowLeft': {
+					event.preventDefault()
+					if (!this.previousPhoto) return
+					this.$router.push({name: 'albums-album-id', params: {album: this.album.id, id: this.previousPhoto.id}})
+					break
+				}
+			}
 		}
 	}
 }
