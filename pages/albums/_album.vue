@@ -41,7 +41,7 @@ export default {
 			return this.bodyWidth - this.streamMargin * 2
 		},
 		photoStream () {
-			if (!this.streamWidth) return []
+			if (!this.bodyWidth) return [] // avoid flash of single row content
 			const photos = this.album.photos
 			const rows = [{
 				photos: []
