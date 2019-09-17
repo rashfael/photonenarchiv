@@ -16,6 +16,9 @@ export default {
 		extend (config) {
 			config.resolveLoader.modules.push(path.resolve(__dirname, 'loaders'))
 			config.resolve.alias['albums'] = path.join(__dirname, 'events')
+		},
+		babel: {
+			plugins: ['@babel/plugin-proposal-optional-chaining']
 		}
 	},
 	serverMiddleware: [

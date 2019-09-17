@@ -84,6 +84,9 @@ export default {
 		max-width: calc(100vw - 64px)
 		max-height: calc(100vh - 80px)
 		object-fit: contain
+		+below('m')
+			max-width: calc(100vw - 16px)
+			max-height: calc(100vh - 64px)
 	.nav-next, .nav-previous, .nav-return
 		width: 64px
 		height: @width
@@ -109,10 +112,14 @@ export default {
 		right: 128px
 		svg
 			margin-left: 4px // counteract visual inbalance effect
+		+below('m')
+			right: 8px
 	.nav-previous
 		left: 128px
 		svg
 			margin-right: 4px // counteract visual inbalance effect
+		+below('m')
+			left: 8px
 	.nav-return
 		top: 8px
 		left: 16px

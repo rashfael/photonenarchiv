@@ -9,7 +9,6 @@
 						progressive-image.thumbnail(:image="photo.thumbnailImage", :style="{'--scaled-width': photo.scaledWidth + 'px'}")
 </template>
 <script>
-const STREAM_MARGIN = 64
 const STREAM_GUTTER = 4
 export default {
 	async asyncData ({ $axios, params, payload, $payloadURL, route }) {
@@ -31,10 +30,16 @@ export default {
 	components: {},
 	data () {
 		return {
-			streamWidth: null
+			bodyWidth: null
 		}
 	},
 	computed: {
+		streamMargin () {
+			return this.$mq?.below['m'] ? 8 : 64
+		},
+		streamWidth () {
+			return this.bodyWidth - this.streamMargin * 2
+		},
 		photoStream () {
 			if (!this.streamWidth) return []
 			const photos = this.album.photos
@@ -76,7 +81,7 @@ export default {
 	},
 	methods: {
 		onResize () {
-			this.streamWidth = document.body.offsetWidth - STREAM_MARGIN * 2
+			this.bodyWidth = document.body.offsetWidth
 		}
 	}
 }
@@ -91,6 +96,8 @@ export default {
 		padding: 8px 64px
 		display: flex
 		flex-direction: column
+		+below('m')
+			padding: 8px
 		.row
 			height: calc(300px * var(--stream-row-scale))
 			display: flex
