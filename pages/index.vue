@@ -50,10 +50,13 @@ export default {
 			height: 240px
 			margin: 16px
 			card()
+			color: $clr-primary-text-light
+			text-decoration: none
 			img
 				width: 200px
 			.name
 				font-size: 24px
 				text-align: center
 				line-height: 40px // HACK
+
 </style>

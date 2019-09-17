@@ -12,7 +12,6 @@ module.exports = {
 			return {
 				id: albumPath,
 				...albumConfig,
-				thumbnail: path.join(albumPath, albumConfig.thumbnail)
 			}
 		}))
 	},
@@ -39,7 +38,6 @@ module.exports = {
 		return {
 			id: albumPath,
 			...albumConfig,
-			thumbnail: path.join(albumPath, albumConfig.thumbnail),
 			photos: photos.filter(photo => !!photo)
 		}
 	}

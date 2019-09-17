@@ -22,7 +22,8 @@ export default {
 		'~/album-api/index.js'
 	],
 	head: {
-		script: [{src: 'https://kit.fontawesome.com/fc488a80da.js'}]
+		script: [{src: 'https://kit.fontawesome.com/fc488a80da.js'}],
+		meta: [{name: 'viewport', content: 'width=device-width, initial-scale=1'}]
 	},
 	generate: {
 		routes: async function () {
