@@ -31,9 +31,18 @@ images must have a unique name without the file ending!
 album config index.yml:
 ```
 name: My Album
+defaults:
+	license: cc-by
+	someOther: Metadata
 ```
 
 ```
 npm ci
 npm run generate
 ```
+
+## Metadata
+
+Image Metadata is read from EXIF, a yaml file with the same name as the image, and supplemented by the album defaults.
+
+Priority from high to low: EXIF, $FILENAME.yml, album defaults
