@@ -2,7 +2,7 @@
 .landing-page
 	.events
 		nuxt-link.event(v-for="album of albums", :to="{name: 'albums-album', params: {album: album.id}}")
-			img.thumbnail(:src="album.thumbnail")
+			img.thumbnail(:src="album.thumbnail.sizes[album.thumbnail.sizes.length - 1].src")
 			.name {{ album.name }}
 </template>
 <script>
@@ -18,7 +18,7 @@ export default {
 		}
 		return {
 			albums: albums.map(album => {
-				album.thumbnail = require('!!progressive-image-loader!albums/' + album.id + '/thumbnail.jpg').src
+				album.thumbnail = require('!!progressive-image-loader!albums/' + album.id + '/thumbnail.jpg')
 				return album
 			})
 		}

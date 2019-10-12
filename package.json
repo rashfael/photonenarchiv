@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nuxt",
-    "build": "npx gridsome build",
+    "start": "NODE_OPTIONS='--max-old-space-size=4096' nuxt",
     "generate": "NODE_ENV='production' nuxt generate"
   },
   "repository": {
@@ -23,16 +22,16 @@
     "express-promise-router": "^3.0.3",
     "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",
-    "nuxt": "^2.9.2",
+    "nuxt": "^2.10.1",
     "nuxt-payload-extractor": "0.0.12",
     "probe-image-size": "^5.0.0",
-    "sharp": "^0.23.0"
+    "sharp": "^0.23.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.4.0",
+    "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-plugin-babel": "^5.3.0",

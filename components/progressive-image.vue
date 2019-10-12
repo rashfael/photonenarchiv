@@ -1,5 +1,5 @@
 <template lang="pug">
-img.c-progressive-image(:class="{loaded}", :src="src", @load="onLoad")
+img.c-progressive-image(:class="{loaded}", :src="src", :srcset="srcset", :sizes="sizes", @load="onLoad", :style="style")
 </template>
 <script>
 export default {
@@ -7,7 +7,8 @@ export default {
 		image: {
 			type: Object,
 			required: true
-		}
+		},
+		fixedSize: Object
 	},
 	data () {
 		return {
@@ -17,7 +18,30 @@ export default {
 	},
 	computed: {
 		src () {
-			return this.intersected ? this.image.src : this.image.placeholderSrc
+			if (!this.intersected) return this.image.placeholderSrc
+			if (!this.fixedSize) return this.image.sizes[this.image.sizes.length - 1].src
+			return this.image.sizes.find(size => size.height >= this.fixedSize.height).src // TODO width
+		},
+		srcset () {
+			if (!this.intersected || this.fixedSize) return
+			return this.image.sizes.map(size => `${size.src} ${size.width}w`)
+		},
+		sizes () {
+			if (!this.intersected || this.fixedSize) return
+			return this.image.sizes.map((size, index) => {
+				if (index === this.image.sizes.length - 1) return `${size.width}px`
+				return `(max-width: ${size.width}px) ${size.width}px` // image is not quite full screen but hey
+			})
+		},
+		largestSize () {
+			return this.image.sizes[this.image.sizes.length - 1]
+		},
+		style () {
+			if (this.fixedSize) return
+			return {
+				height: this.largestSize.height + 'px',
+				width: this.largestSize.width + 'px'
+			}
 		}
 	},
 	created () {},

@@ -3,7 +3,7 @@
 	nuxt-link.nav-return(:to="{name: 'albums-album', params: {album: album.id}}"): i.far.fa-arrow-left
 	nuxt-link.nav-previous(:to="!previousPhoto ? '#' :{name: 'albums-album-id', params: {album: album.id, id: previousPhoto && previousPhoto.id}}", :event="(!previousPhoto ? '' : 'click')", :class="{disabled: !previousPhoto}"): i.far.fa-chevron-left
 	nuxt-link.nav-next(:to="!nextPhoto ? '#' :{name: 'albums-album-id', params: {album: album.id, id: nextPhoto && nextPhoto.id}}", :event="(!nextPhoto ? '' : 'click')", :class="{disabled: !nextPhoto}"): i.far.fa-chevron-right
-	progressive-image.thumbnail(:image="photo.fullSizeImage", :style="{height: `${photo.fullSizeImage.size.height}px`, width: `${photo.fullSizeImage.size.width}px`}", :key="photo.image")
+	progressive-image.thumbnail(:image="photo.fullSizeImage", :key="photo.image")
 </template>
 <script>
 const context = require.context('!!progressive-image-loader!albums/', true, /\.(jpg|png|webp)$/)
