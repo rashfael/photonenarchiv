@@ -20,19 +20,11 @@ module.exports = {
 		const albumConfig = yaml.safeLoad(await fs.readFile(path.join(ALBUM_ROOT, albumPath, 'index.yml'), 'utf-8'))
 		const photoPaths = await fs.readdir(path.join(ALBUM_ROOT, albumPath))
 		const photos = await Promise.all(photoPaths.map(async photoPath => {
-			const { dir, name, ext } = path.parse(path.join(albumPath, photoPath))
+			const { name, ext } = path.parse(path.join(albumPath, photoPath))
 			if (!['.png', '.jpg'].includes(ext)) return
-			let metadata
-			try {
-				const rawMetadata = await fs.readFile(path.join(ALBUM_ROOT, dir, name + '.yml'), 'utf-8')
-				metadata = yaml.safeLoad(rawMetadata)
-			} catch (e) {
-				if (e.code !== 'ENOENT') throw e
-			}
 			return {
 				id: name,
-				image: path.join(albumPath, photoPath),
-				...metadata
+				image: path.join(albumPath, photoPath)
 			}
 		}))
 		return {

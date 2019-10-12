@@ -15,7 +15,7 @@ export default {
 	build: {
 		devMiddleware: {
 			writeToDisk: (filePath) => {
-				return /album-images/.test(filePath)
+				return /album-images/.test(filePath) // does not seem to work
 			}
 		},
 		extend (config) {

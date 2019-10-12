@@ -6,7 +6,7 @@
 			.row(v-for="row of photoStream", :style="{'--stream-row-scale': row.scale || 1}")
 				template(v-for="photo of row.photos")
 					nuxt-link.photo(:to="{name: 'albums-album-id', params: {album: album.id, id: photo.id}}")
-						progressive-image.thumbnail(:image="photo.thumbnailImage", :fixedSize="{height: 300}", :style="{'--scaled-width': photo.scaledWidth + 'px'}")
+						progressive-image.thumbnail(:image="photo", :fixedSize="{height: 300}", :style="{'--scaled-width': photo.scaledWidth + 'px'}")
 </template>
 <script>
 const STREAM_GUTTER = 4
@@ -22,7 +22,7 @@ export default {
 		}
 		const context = require.context('!!progressive-image-loader!albums/', true, /\.(jpg|png|webp)$/)
 		album.photos = album.photos.filter(photo => !photo.image.endsWith('thumbnail.jpg')).map(photo => {
-			photo.thumbnailImage = context('./' + photo.image)
+			Object.assign(photo, context('./' + photo.image))
 			return photo
 		})
 		return {album}
@@ -49,7 +49,7 @@ export default {
 			let rowWidth = 0
 			let row = rows[rows.length - 1]
 			for (const photo of photos) {
-				photo.thumbnailWidth = photo.thumbnailImage.sizes.find(size => size.name === 'thumbnail').width
+				photo.thumbnailWidth = photo.sizes.find(size => size.name === 'thumbnail').width
 				rows[rows.length - 1].photos.push(photo)
 				rowWidth += photo.thumbnailWidth
 				if (rowWidth + (row.photos.length - 1) * STREAM_GUTTER > this.streamWidth) {

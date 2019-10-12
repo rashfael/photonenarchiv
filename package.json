@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rashfael/photonenarchiv#readme",
   "dependencies": {
     "@nuxtjs/axios": "^5.6.0",
+    "exif": "^0.6.0",
     "express-promise-router": "^3.0.3",
     "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",

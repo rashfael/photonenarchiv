@@ -1,12 +1,15 @@
 // TODO:
 // - replace probe image size with sharp metadata?
 // - exif rotation?
+// - loader gets called multiple times per image?
 
 const fs = require('fs-extra')
 const path = require('path')
 const loaderUtils = require('loader-utils')
 const probeImageSize = require('probe-image-size')
 const sharp = require('sharp')
+const ExifImage = require('exif').ExifImage
+const yaml = require('js-yaml')
 
 const BLUR_WIDTH = 64
 
@@ -20,16 +23,33 @@ const SIZES = [
 ]
 module.exports.raw = true // get raw buffer
 module.exports = async function (sourceBuffer) {
-	const { ext } = path.parse(this.resourcePath)
+	const { dir, name, ext } = path.parse(this.resourcePath)
 	if (!['.png', '.jpeg', '.jpg', '.webp'].includes(ext)) return
 	// const options = loaderUtils.getOptions(this)
 	sourceBuffer = await fs.readFile(this.resourcePath) // no clue why I have to read the file again for this to work
 
 	const sourceSize = probeImageSize.sync(sourceBuffer)
 
+	// assemble metadata
 	const response = {
-		sizes: []
+		sizes: [],
+		metadata: {}
 	}
+
+	ExifImage({ image: sourceBuffer }, (error, exifData) => {
+		if (error) return // console.error('EXIF ERROR' + error.message)
+		response.metadata.artist = exifData.image.Artist
+		response.metadata.date = exifData.image.DateTimeOriginal
+	})
+	// try reading FILENAME.yml
+	try {
+		const rawMetadata = await fs.readFile(path.join(dir, name + '.yml'), 'utf-8')
+		const metadata = yaml.safeLoad(rawMetadata)
+		Object.assign(response.metadata, metadata)
+	} catch (e) {
+		if (e.code !== 'ENOENT') throw e
+	}
+
 	for (const size of SIZES) {
 		let sizedNamePart = ''
 		let imageBuffer = sourceBuffer
