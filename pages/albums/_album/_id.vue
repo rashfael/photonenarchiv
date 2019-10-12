@@ -106,11 +106,11 @@ export default {
 	flex: auto
 	position: relative
 	display: flex
-	justify-content: center
 	align-items: center
 	img
 		max-width: calc(100vw - 64px)
 		max-height: calc(100vh - 80px)
+		margin: 0 auto
 		object-fit: contain
 		transition: max-width .2s ease
 		+below('m')
@@ -202,7 +202,9 @@ export default {
 	&.info-open
 		+above('s')
 			.nav-next
-				right: 128px + 320px
+				right: 16px + 320px
+			.nav-previous
+				left: 16px
 			img
 				max-width: calc(100vw - 64px - 320px) // not working
 
