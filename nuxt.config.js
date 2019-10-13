@@ -1,5 +1,5 @@
 import path from 'path'
-
+import ProgressiveImagePlugin from './loaders/progressive-image-plugin'
 export default {
 	server: {
 		port: 8080
@@ -21,6 +21,7 @@ export default {
 		extend (config) {
 			config.resolveLoader.modules.push(path.resolve(__dirname, 'loaders'))
 			config.resolve.alias['albums'] = path.join(__dirname, 'events')
+			config.plugins.push(new ProgressiveImagePlugin())
 		},
 		babel: {
 			plugins: ['@babel/plugin-proposal-optional-chaining']

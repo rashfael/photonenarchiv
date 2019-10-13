@@ -26,7 +26,7 @@ Albums live in `albums/`, create a folder for each album.
 ┃   ┃   ┣━━ …
 ```
 
-images must have a unique name without the file ending!
+Images must have a unique name excluding the file ending!
 
 album config index.yml:
 ```
