@@ -286,6 +286,7 @@ class ImageModule extends Module {
 			compilation,
 			fs
 		)
+		loaderContext.resourcePath = this.resource
 		return this._scheduler.queue(() => processImage.call(loaderContext, this.resource).then(source => {
 			this._source = this.createSource(source)
 			this._cachedSources.clear()
