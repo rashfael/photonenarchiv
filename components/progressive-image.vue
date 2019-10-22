@@ -20,11 +20,11 @@ export default {
 		src () {
 			if (!this.intersected) return this.image.placeholderSrc
 			if (!this.fixedSize) return this.image.sizes[this.image.sizes.length - 1].src
-			return this.image.sizes.find(size => size.height >= this.fixedSize.height).src // TODO width
+			return '/_nuxt/' + this.image.sizes.find(size => size.height >= this.fixedSize.height).src // TODO width
 		},
 		srcset () {
 			if (!this.intersected || this.fixedSize) return
-			return this.image.sizes.map(size => `${size.src} ${size.width}w`)
+			return this.image.sizes.map(size => `/_nuxt/${size.src} ${size.width}w`)
 		},
 		sizes () {
 			if (!this.intersected || this.fixedSize) return

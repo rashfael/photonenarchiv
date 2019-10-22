@@ -2,7 +2,7 @@
 .landing-page
 	.events
 		nuxt-link.event(v-for="album of albums", :to="{name: 'albums-album', params: {album: album.id}}")
-			img.thumbnail(:src="album.thumbnail.sizes[album.thumbnail.sizes.length - 1].src")
+			img.thumbnail(:src="'/_nuxt/' + album.thumbnail.sizes[album.thumbnail.sizes.length - 1].src")
 			.name {{ album.name }}
 </template>
 <script>

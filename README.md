@@ -13,7 +13,7 @@ a vue/nuxt/webpack based static gallery.
 
 ## Future Features
 
-- build caching
+- no-js support
 
 ## Multithreading Limitations
 The current implementation relies on sharp.js threading and only processes one source image at a time.
@@ -55,3 +55,6 @@ npm run generate
 Image Metadata is read from EXIF, a yaml file with the same name as the image, and supplemented by the album defaults.
 
 Priority from high to low: EXIF, $FILENAME.yml, album defaults
+
+## Caching
+Generated images are cached to `node_modules/.cache`. Remove this directory to clear the cache.

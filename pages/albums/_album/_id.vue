@@ -10,7 +10,7 @@
 		.info-sidebar(v-if="infoIsOpen")
 			.btn-close-info(title="hide metadata", @click="closeInfo"): i.far.fa-2x.fa-times
 			.metadata
-				.metadata-set(v-for="[key, value] of metadata", :class="`metadata-${key}`")
+				.metadata-set(v-for="[key, value] of metadata", :class="`metadata-${key}`", :key="key")
 					.key {{ key }}
 					a.value(v-if="key === 'license' && value.startsWith('cc')", rel="license", :href="`https://creativecommons.org/licenses/${value.substring(3)}/4.0/`", :title="value")
 						i.fab.fa-creative-commons
@@ -52,7 +52,7 @@ export default {
 			return this.album.photos[this.index + 1]
 		},
 		metadata () {
-			const metadataDict = Object.assign(this.album.defaults || {}, this.photo.metadata)
+			const metadataDict = Object.assign({}, this.album.defaults || {}, this.photo.metadata)
 			const metadata = []
 			for (const key of METADATA_ORDER) {
 				if (!metadataDict[key]) continue

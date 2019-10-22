@@ -13,7 +13,7 @@ module.exports = {
 				id: albumPath,
 				...albumConfig,
 			}
-		}))
+		})).then(albums => albums.filter(album => !album.ignore))
 	},
 	async getAlbum (id) {
 		const albumPath = id
