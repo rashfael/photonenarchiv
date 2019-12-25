@@ -20,7 +20,7 @@ export default {
 		},
 		extend (config) {
 			config.resolveLoader.modules.push(path.resolve(__dirname, 'loaders'))
-			config.resolve.alias['albums'] = path.join(__dirname, 'events')
+			config.resolve.alias['albums'] = path.join(__dirname, 'albums')
 			config.plugins.push(new ProgressiveImagePlugin())
 		},
 		babel: {
