@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
-const ALBUM_ROOT = path.join(__dirname, '../events')
+const ALBUM_ROOT = path.join(__dirname, '../albums')
 
 module.exports = {
 	async getAlbums () {
